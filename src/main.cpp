@@ -1,6 +1,7 @@
+#include "gui/gui.hpp"
 #include <iostream>
 
 int main(int argc, char* argv[]) {
-  std::cout << "I've been created by scapp!";
+  ktp::gui::start();
   return 0;
 }

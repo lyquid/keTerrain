@@ -27,6 +27,7 @@ endif()
 
 if(DEFINED CMAKE_TOOLCHAIN_FILE)
   target_link_libraries(keTerrain PRIVATE
+    keTerrainGUI
     # add needed libraries
     # like: sfml-system
   )
