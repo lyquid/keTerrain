@@ -4,7 +4,7 @@ add_library(keTerrainGUI
 
 if(DEFINED CMAKE_TOOLCHAIN_FILE)
   target_link_libraries(keTerrainGUI PRIVATE
-    # imgui::imgui
+    imgui::imgui
     # ImGui-SFML::ImGui-SFML
     # sfml-system
     # sfml-graphics

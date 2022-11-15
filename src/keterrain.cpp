@@ -1,5 +1,5 @@
 #include "keterrain.hpp"
-#include <imgui.h>
+#include "gui/gui.hpp"
 
 ktp::KeTerrain::KeTerrain():
   m_desktop(sf::VideoMode::getDesktopMode()),
@@ -17,8 +17,7 @@ void ktp::KeTerrain::run() {
     }
     ImGui::SFML::Update(m_window, m_delta_clock.restart());
 
-    ImGui::ShowDemoWindow();
-    // ktp::gui::layout();
+    ktp::gui::layout();
 
     m_window.clear();
     ImGui::SFML::Render(m_window);
