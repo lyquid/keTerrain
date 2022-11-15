@@ -1,7 +1,6 @@
 add_executable(keTerrain
+  keterrain.cpp
   main.cpp
-  # add more cpp files to compile!
-  # ej. game.cpp
 )
 target_compile_features(keTerrain PUBLIC cxx_std_20)
 set_target_properties(keTerrain PROPERTIES CXX_EXTENSIONS OFF)
@@ -28,8 +27,11 @@ endif()
 if(DEFINED CMAKE_TOOLCHAIN_FILE)
   target_link_libraries(keTerrain PRIVATE
     keTerrainGUI
-    # add needed libraries
-    # like: sfml-system
+    imgui::imgui
+    ImGui-SFML::ImGui-SFML
+    sfml-system
+    sfml-graphics
+    sfml-window
   )
 else()
   # DO YOUR OWN

@@ -15,7 +15,6 @@
 namespace ktp { namespace gui {
 
 void layout();
-void start();
 
 } } // namespace gui/ktp
 

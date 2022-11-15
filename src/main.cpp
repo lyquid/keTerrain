@@ -1,7 +1,9 @@
-#include "gui/gui.hpp"
-#include <iostream>
+#include "keterrain.hpp"
 
 int main(int argc, char* argv[]) {
-  ktp::gui::start();
+
+  ktp::KeTerrain keTerrain {};
+  keTerrain.run();
+
   return 0;
 }
