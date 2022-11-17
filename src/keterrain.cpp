@@ -1,6 +1,7 @@
 #include "keterrain.hpp"
 
 #include "noise.hpp"
+#include "palette.hpp"
 #include "gui/gui.hpp"
 #include <imgui-SFML.h>
 
@@ -14,6 +15,48 @@ ktp::KeTerrain::KeTerrain():
 }
 
 ktp::KeTerrain::~KeTerrain() { ImGui::SFML::Shutdown(); }
+
+
+ktp::RawTextureData ktp::KeTerrain::noiseToColorData(const NoiseData& noise) {
+  RawTextureData texture_data {};
+  texture_data.reserve(noise.size() * 4);
+  for (auto value: noise) {
+    if (value < -0.4) {
+      flattenColor(texture_data, Palette::dark_blue);
+    }
+    else if (value < 0.0) {
+      flattenColor(texture_data, Palette::blue);
+    }
+    else if (value < 0.05) {
+      flattenColor(texture_data, Palette::yellow);
+    }
+    else if (value < 0.2) {
+      flattenColor(texture_data, Palette::green);
+    }
+    else if (value < 0.8) {
+      flattenColor(texture_data, Palette::dark_green);
+    }
+    else if (value < 0.9) {
+      flattenColor(texture_data, Palette::grey);
+    }
+    else {
+      flattenColor(texture_data, Palette::white);
+    }
+  }
+  return texture_data;
+}
+
+ktp::RawTextureData ktp::KeTerrain::noiseToTextureData(const NoiseData& noise) {
+  RawTextureData texture_data {};
+  texture_data.reserve(noise.size() * 4);
+  for (auto value: noise) {
+    // value to [0, 1] range
+    value = value / 2.0 + 0.5;
+    // transform and push to the texture data
+    flattenNoise(texture_data, value);
+  }
+  return texture_data;
+}
 
 void ktp::KeTerrain::run() {
   while (m_window.isOpen()) {
@@ -35,11 +78,15 @@ void ktp::KeTerrain::run() {
   }
 }
 
-void ktp::KeTerrain::resetTexture(const Size2Du& size, const RawTextureData& new_data) {
-  // new texture
-  m_texture = std::make_unique<sf::Texture>();
-  m_texture->create(size.x, size.y);
-  m_texture->update(new_data.data());
-  // point the sprite to the new texture
-  m_sprite.setTexture(*m_texture, true);
+void ktp::KeTerrain::resetTexture(const Size2Du& size, const NoiseData& new_data) {
+  // new noise texture
+  m_noise_texture = std::make_unique<sf::Texture>();
+  m_noise_texture->create(size.x, size.y);
+  m_noise_texture->update(noiseToTextureData(new_data).data());
+  // point the sprite to the new noise texture
+  m_sprite.setTexture(*m_noise_texture, true);
+  // new colorized texture
+  m_colored_texture = std::make_unique<sf::Texture>();
+  m_colored_texture->create(size.x, size.y);
+  m_colored_texture->update(noiseToColorData(new_data).data());
 }

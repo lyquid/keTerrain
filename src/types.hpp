@@ -28,6 +28,7 @@ namespace ktp {
 
   class KeTerrain;
 
+  using NoiseData      = std::vector<double>;
   using Pixels         = std::vector<sf::Color>;
   using RawTextureData = std::vector<unsigned char>;
   using TexturePtr     = std::unique_ptr<sf::Texture>;

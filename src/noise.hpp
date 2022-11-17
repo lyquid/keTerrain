@@ -16,7 +16,13 @@
 
 namespace ktp { namespace noise {
 
-RawTextureData perlin(const Size2D& size, double frequency = 10.0);
+/**
+ * @brief Generates Perlin noise data between [-1, 1].
+ * @param size The size desired.
+ * @param frequency The frequency.
+ * @return A vector with the noise data.
+ */
+NoiseData perlin(const Size2D& size, double frequency = 10.0);
 
 } } // namespace noise/ktp
 
