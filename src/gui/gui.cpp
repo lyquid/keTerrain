@@ -6,7 +6,7 @@
 #include <thread>
 
 void ktp::gui::layout(KeTerrain& keterrain) {
-  ImGui::ShowDemoWindow();
+  // ImGui::ShowDemoWindow();
 
   static bool processing {false};
 

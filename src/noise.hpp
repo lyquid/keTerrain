@@ -16,7 +16,7 @@
 
 namespace ktp { namespace noise {
 
-RawTextureData perlin(const Size2D& size, float scale = 1.f);
+RawTextureData perlin(const Size2D& size, double scale = 1.0);
 
 } } // namespace noise/ktp
 
