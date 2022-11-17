@@ -23,7 +23,7 @@ void ktp::gui::layout(KeTerrain& keterrain) {
   ImGui::Text("Settings");
   ImGui::BeginDisabled(processing);
 
-    static float scale {0.1};
+    static float scale {0.01f};
     static glm::vec<2, int> size {keterrain.windowSize()};
     if (ImGui::InputInt("Width", &size.x, 1, 50)) {}
     if (ImGui::InputInt("Height", &size.y, 1, 50)) {}

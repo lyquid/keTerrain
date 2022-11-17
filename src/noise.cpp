@@ -1,6 +1,7 @@
 #include "noise.hpp"
 
 #include <glm/gtc/noise.hpp>
+#include <SFML/Graphics.hpp>
 
 ktp::RawTextureData ktp::noise::perlin(const Size2D& size, float scale) {
   RawTextureData texture_data {};

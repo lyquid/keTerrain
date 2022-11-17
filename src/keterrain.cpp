@@ -1,16 +1,19 @@
 #include "keterrain.hpp"
 
-#include "gui/gui.hpp"
 #include "noise.hpp"
+#include "gui/gui.hpp"
+#include <imgui-SFML.h>
 
 ktp::KeTerrain::KeTerrain():
   m_desktop(sf::VideoMode::getDesktopMode()),
-  m_window(sf::VideoMode(m_window_size.x, m_window_size.y, m_desktop.bitsPerPixel), "keTerrain")
-{
+  m_window(sf::VideoMode(m_window_size.x, m_window_size.y, m_desktop.bitsPerPixel), "keTerrain") {
+    
   if (!ImGui::SFML::Init(m_window)) {
     printf("ERROR initializing imgui-sfml");
   }
 }
+
+ktp::KeTerrain::~KeTerrain() { ImGui::SFML::Shutdown(); }
 
 void ktp::KeTerrain::run() {
   while (m_window.isOpen()) {

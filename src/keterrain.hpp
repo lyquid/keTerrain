@@ -13,7 +13,6 @@
 #define KETERRAIN_SRC_KETERRAIN_HPP_
 
 #include "types.hpp"
-#include <imgui-SFML.h>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 
@@ -23,7 +22,7 @@ class KeTerrain {
  public:
 
   KeTerrain();
-  ~KeTerrain() { ImGui::SFML::Shutdown(); }
+  ~KeTerrain();
   void run();
   void resetTexture(const Size2Du& size, const RawTextureData& new_data);
   auto windowSize() const { return m_window_size; }
