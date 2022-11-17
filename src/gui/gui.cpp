@@ -28,10 +28,10 @@ void ktp::gui::layout(KeTerrain& keterrain) {
     if (ImGui::InputInt("Width", &size.x, 1, 50)) {}
     if (ImGui::InputInt("Height", &size.y, 1, 50)) {}
     // frequency
-    static float frequency {10.f};
+    static float frequency {0.02f};
     constexpr auto frequency_format {"%.5f"};
-    if (ImGui::InputFloat("Frequency", &frequency, 0.1f, 1.f, frequency_format)) {
-      // if (!first_use) keterrain.updateTexture(noise::perlin(size, frequency));
+    if (ImGui::InputFloat("Frequency", &frequency, 0.001f, 0.01f, frequency_format)) {
+      if (!first_use) keterrain.updateTexture(noise::perlinFastNoise(size, frequency));
     }
     ImGui::Separator();
     constexpr auto colorized_text {"View colorized"};

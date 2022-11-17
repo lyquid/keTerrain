@@ -36,6 +36,7 @@ class KeTerrain {
   }
   void updateTexture(const NoiseData& new_data) {
     m_noise_texture->update(noiseToTextureData(new_data).data());
+    m_colored_texture->update(noiseToColorData(new_data).data());
   }
   auto windowSize() const { return m_window_size; }
 

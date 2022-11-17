@@ -30,7 +30,7 @@ ktp::RawTextureData ktp::KeTerrain::noiseToColorData(const NoiseData& noise) {
     else if (value < 0.05) {
       flattenColor(texture_data, Palette::yellow);
     }
-    else if (value < 0.2) {
+    else if (value < 0.3) {
       flattenColor(texture_data, Palette::green);
     }
     else if (value < 0.8) {
@@ -82,11 +82,10 @@ void ktp::KeTerrain::resetTexture(const Size2Du& size, const NoiseData& new_data
   // new noise texture
   m_noise_texture = std::make_unique<sf::Texture>();
   m_noise_texture->create(size.x, size.y);
-  m_noise_texture->update(noiseToTextureData(new_data).data());
-  // point the sprite to the new noise texture
-  m_sprite.setTexture(*m_noise_texture, true);
   // new colorized texture
   m_colored_texture = std::make_unique<sf::Texture>();
   m_colored_texture->create(size.x, size.y);
-  m_colored_texture->update(noiseToColorData(new_data).data());
+  updateTexture(new_data);
+  // point the sprite to the new noise texture
+  m_sprite.setTexture(*m_noise_texture, true);
 }
