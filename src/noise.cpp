@@ -9,17 +9,15 @@ ktp::RawTextureData ktp::noise::perlin(const Size2D& size, double scale) {
 
   for (auto row = 0; row < size.y; ++row) {
     for (auto col = 0; col < size.x; ++col) {
-      const auto sample {glm::dvec2(col, row)};
+      const auto sample {glm::dvec2((double)col / (double)size.x, (double)row / (double)size.y)};
       // res between [-1, 1]
       auto res {glm::perlin(sample * scale)};
       // res to [0, 1] range
       res = res / 2.0 + 0.5;
-      // multiply the sample by white
-      const auto color {glm::dvec3(1.0, 1.0, 1.0) * res};
       // convert to [0, 255] before pushing
-      texture_data.push_back(static_cast<sf::Uint8>(color.r * 255.0));
-      texture_data.push_back(static_cast<sf::Uint8>(color.g * 255.0));
-      texture_data.push_back(static_cast<sf::Uint8>(color.b * 255.0));
+      texture_data.push_back(static_cast<sf::Uint8>(res * 255.0));
+      texture_data.push_back(static_cast<sf::Uint8>(res * 255.0));
+      texture_data.push_back(static_cast<sf::Uint8>(res * 255.0));
       texture_data.push_back(255u);
     }
   }

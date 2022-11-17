@@ -24,7 +24,7 @@ void ktp::gui::layout(KeTerrain& keterrain) {
   ImGui::BeginDisabled(processing);
 
     static float scale {0.01f};
-    static glm::vec<2, int> size {keterrain.windowSize()};
+    static glm::vec<2, int> size {500, 500};
     if (ImGui::InputInt("Width", &size.x, 1, 50)) {}
     if (ImGui::InputInt("Height", &size.y, 1, 50)) {}
     constexpr auto scale_format {"%.5f"};
