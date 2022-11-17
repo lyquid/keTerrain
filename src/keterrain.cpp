@@ -1,11 +1,15 @@
 #include "keterrain.hpp"
+
 #include "gui/gui.hpp"
+#include "noise.hpp"
 
 ktp::KeTerrain::KeTerrain():
   m_desktop(sf::VideoMode::getDesktopMode()),
-  m_window(sf::VideoMode(1600, 1200, m_desktop.bitsPerPixel), "keTerrain")
+  m_window(sf::VideoMode(m_window_size.x, m_window_size.y, m_desktop.bitsPerPixel), "keTerrain")
 {
-  ImGui::SFML::Init(m_window);
+  if (!ImGui::SFML::Init(m_window)) {
+    printf("ERROR initializing imgui-sfml");
+  }
 }
 
 void ktp::KeTerrain::run() {
@@ -17,11 +21,22 @@ void ktp::KeTerrain::run() {
     }
     ImGui::SFML::Update(m_window, m_delta_clock.restart());
 
-    ktp::gui::layout();
-
     m_window.clear();
+
+    m_window.draw(m_sprite);
+
+    gui::layout(*this);
     ImGui::SFML::Render(m_window);
+
     m_window.display();
   }
-  ImGui::SFML::Shutdown();
+}
+
+void ktp::KeTerrain::resetTexture(const Size2Du& size, const RawTextureData& new_data) {
+  // new texture
+  m_texture = std::make_unique<sf::Texture>();
+  m_texture->create(size.x, size.y);
+  m_texture->update(new_data.data());
+  // point the sprite to the new texture
+  m_sprite.setTexture(*m_texture, true);
 }

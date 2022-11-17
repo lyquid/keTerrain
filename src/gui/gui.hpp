@@ -12,12 +12,13 @@
 #if !defined(KETERRAIN_SRC_GUI_GUI_HPP_)
 #define KETERRAIN_SRC_GUI_GUI_HPP_
 
+#include "../types.hpp"
+
 namespace ktp { namespace gui {
 
-void layout();
+void layout(KeTerrain& keterrain);
 
 } } // namespace gui/ktp
 
 
 #endif // KETERRAIN_SRC_GUI_GUI_HPP_
-

@@ -1,6 +1,7 @@
 add_executable(keTerrain
   keterrain.cpp
   main.cpp
+  noise.cpp
 )
 target_compile_features(keTerrain PUBLIC cxx_std_20)
 set_target_properties(keTerrain PROPERTIES CXX_EXTENSIONS OFF)
@@ -26,9 +27,10 @@ endif()
 
 if(DEFINED CMAKE_TOOLCHAIN_FILE)
   target_link_libraries(keTerrain PRIVATE
-    keTerrainGUI
+    glm::glm
     imgui::imgui
     ImGui-SFML::ImGui-SFML
+    keTerrainGUI
     sfml-system
     sfml-graphics
     sfml-window

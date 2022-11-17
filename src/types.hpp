@@ -9,13 +9,17 @@
  *
  */
 
-namespace sf {
-  // IMGUI
-  // SFML
-  class Clock;
-  class Event;
-  class RenderWindow;
-  class VideoMode;
-  // own
+#include <glm/vec2.hpp>
+#include <SFML/Graphics.hpp>
+#include <memory>
+#include <vector>
+
+namespace ktp {
   class KeTerrain;
+
+  using Pixels         = std::vector<sf::Color>;
+  using RawTextureData = std::vector<sf::Uint8>;
+  using TexturePtr     = std::unique_ptr<sf::Texture>;
+  using Size2D         = glm::vec<2, int>;
+  using Size2Du        = glm::vec<2, unsigned int>;
 }

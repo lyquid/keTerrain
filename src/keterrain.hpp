@@ -23,14 +23,21 @@ class KeTerrain {
  public:
 
   KeTerrain();
+  ~KeTerrain() { ImGui::SFML::Shutdown(); }
   void run();
+  void resetTexture(const Size2Du& size, const RawTextureData& new_data);
+  auto windowSize() const { return m_window_size; }
 
  private:
+
+  Size2Du m_window_size {1600, 1200};
 
   sf::Clock m_delta_clock {};
   sf::VideoMode m_desktop;
   sf::RenderWindow m_window;
 
+  sf::Sprite m_sprite {};
+  TexturePtr m_texture {nullptr};
 };
 
 } // namespace ktp
