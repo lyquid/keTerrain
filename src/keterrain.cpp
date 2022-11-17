@@ -7,7 +7,7 @@
 ktp::KeTerrain::KeTerrain():
   m_desktop(sf::VideoMode::getDesktopMode()),
   m_window(sf::VideoMode(m_window_size.x, m_window_size.y, m_desktop.bitsPerPixel), "keTerrain") {
-    
+
   if (!ImGui::SFML::Init(m_window)) {
     printf("ERROR initializing imgui-sfml");
   }

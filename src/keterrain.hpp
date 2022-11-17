@@ -25,6 +25,7 @@ class KeTerrain {
   ~KeTerrain();
   void run();
   void resetTexture(const Size2Du& size, const RawTextureData& new_data);
+  void updateTexture(const RawTextureData& new_data) { m_texture->update(new_data.data()); }
   auto windowSize() const { return m_window_size; }
 
  private:

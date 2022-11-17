@@ -8,6 +8,7 @@
 void ktp::gui::layout(KeTerrain& keterrain) {
   // ImGui::ShowDemoWindow();
 
+  static bool first_use {true};
   static bool processing {false};
 
   ImGui::SetNextWindowSize(ImVec2(510, 528), ImGuiCond_FirstUseEver);
@@ -22,27 +23,28 @@ void ktp::gui::layout(KeTerrain& keterrain) {
 
   ImGui::Text("Settings");
   ImGui::BeginDisabled(processing);
-
-    static float scale {0.01f};
+    // size
     static glm::vec<2, int> size {500, 500};
     if (ImGui::InputInt("Width", &size.x, 1, 50)) {}
     if (ImGui::InputInt("Height", &size.y, 1, 50)) {}
-    constexpr auto scale_format {"%.5f"};
-    if (ImGui::InputFloat("Scale", &scale, 0.001f, 0.1f, scale_format)) {}
-
+    // frequency
+    static float frequency {10.f};
+    constexpr auto frequency_format {"%.5f"};
+    if (ImGui::InputFloat("Frequency", &frequency, 0.1f, 1.f, frequency_format)) {
+      if (!first_use) keterrain.updateTexture(noise::perlin(size, frequency));
+    }
     ImGui::Separator();
-
+    // button for generation
     if (ImGui::Button("Generate texture")) {
       processing = true;
       std::thread process_thread { [&] {
-        keterrain.resetTexture(size, noise::perlin(size, scale));
+        keterrain.resetTexture(size, noise::perlin(size, frequency));
         processing = false;
+        first_use = false;
       }};
       process_thread.detach();
     }
-
     ImGui::Separator();
-
   ImGui::EndDisabled();
 
   ImGui::Separator();
