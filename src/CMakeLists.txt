@@ -27,6 +27,7 @@ endif()
 
 if(DEFINED CMAKE_TOOLCHAIN_FILE)
   target_link_libraries(keTerrain PRIVATE
+    FastNoise
     glm::glm
     imgui::imgui
     ImGui-SFML::ImGui-SFML

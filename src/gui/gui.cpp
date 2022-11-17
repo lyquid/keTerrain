@@ -41,7 +41,7 @@ void ktp::gui::layout(KeTerrain& keterrain) {
     if (ImGui::Button("Generate texture")) {
       processing = true;
       std::thread process_thread { [&] {
-        keterrain.resetTexture(size, noise::perlin(size, frequency));
+        keterrain.resetTexture(size, noise::perlinFastNoise(size, frequency));
         processing = false;
         first_use = false;
         button_text = colorized_text;

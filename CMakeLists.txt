@@ -51,6 +51,7 @@ else()
 	# like: find_package(SFML COMPONENTS system window graphics CONFIG REQUIRED)
 endif()
 
+add_subdirectory(lib/FastNoise2)
 add_subdirectory(src)
 add_subdirectory(src/gui)
 

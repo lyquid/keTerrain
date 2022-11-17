@@ -13,6 +13,7 @@
 #define KETERRAIN_SRC_NOISE_HPP_
 
 #include "types.hpp"
+#include <chrono>
 
 namespace ktp { namespace noise {
 
@@ -22,7 +23,15 @@ namespace ktp { namespace noise {
  * @param frequency The frequency.
  * @return A vector with the noise data.
  */
-NoiseData perlin(const Size2D& size, double frequency = 10.0);
+NoiseData perlinFastNoise(const Size2D& size, float frequency = 0.02f, int seed = 42);
+
+/**
+ * @brief Generates Perlin noise data between [-1, 1].
+ * @param size The size desired.
+ * @param frequency The frequency.
+ * @return A vector with the noise data.
+ */
+NoiseData perlinGLM(const Size2D& size, float frequency = 10.f);
 
 } } // namespace noise/ktp
 
