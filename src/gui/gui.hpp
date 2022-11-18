@@ -16,9 +16,19 @@
 
 namespace ktp { namespace gui {
 
-void layout(KeTerrain& keterrain);
-
 extern sf::Clock chronometer;
+extern KeTerrain* keterrain;
+extern bool generating_texture;
+
+void layout();
+
+void changeView();
+void frequency();
+void generateTexture();
+void randomize();
+void seed();
+void size();
+void octaves();
 
 } } // namespace gui/ktp
 

@@ -13,6 +13,7 @@ ktp::KeTerrain::KeTerrain():
   m_window(sf::VideoMode(m_window_size.x, m_window_size.y, m_desktop.bitsPerPixel), "keTerrain") {
 
   if (!ImGui::SFML::Init(m_window)) printf("ERROR initializing imgui-sfml");
+  gui::keterrain = this;
 
   randomizeConfig();
 }
@@ -63,7 +64,7 @@ ktp::RawTextureData ktp::KeTerrain::noiseToTextureData(const NoiseData& noise) {
 void ktp::KeTerrain::randomizeConfig() {
   ktr_config.frequency = rng::randomFloat(0.0005f, 0.02f);
   ktr_config.seed = rng::randomInt(1, 1000);
-  // ktr_config.octaves = rng::randomInt(1, 8);
+  // ktr_config.octaves = rng::randomInt(1, 8); // why this produces bad numbers???!!!
   updateTexture();
 }
 
@@ -80,7 +81,7 @@ void ktp::KeTerrain::run() {
 
     m_window.draw(m_sprite);
 
-    gui::layout(*this);
+    gui::layout();
     ImGui::SFML::Render(m_window);
 
     m_window.display();
