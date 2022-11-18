@@ -87,13 +87,18 @@ void ktp::KeTerrain::run() {
 
 void ktp::KeTerrain::updateTexture() {
   static Size2D previous_size {};
-  // process the noise
-  noise::simplexFastNoise(ktr_config);
-  // see if we have to resize the texture and sprite
+  // see if we have to resize the textures and sprite
   if (previous_size == ktr_config.size) {
+    // process the noise
+    noise::simplexFastNoise(ktr_config);
+    // update textures
     m_noise_texture->update(noiseToTextureData(ktr_config.noise_data).data());
     m_colored_texture->update(noiseToColorData(ktr_config.noise_data).data());
   } else {
+    // resize the noise data's vector
+    ktr_config.noise_data.resize(static_cast<std::size_t>(ktr_config.size.x * ktr_config.size.y));
+    // process the noise
+    noise::simplexFastNoise(ktr_config);
     // new noise texture
     m_noise_texture = std::make_unique<sf::Texture>();
     m_noise_texture->create(ktr_config.size.x, ktr_config.size.y);

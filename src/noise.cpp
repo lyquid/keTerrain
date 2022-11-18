@@ -5,9 +5,6 @@
 
 void ktp::noise::simplexFastNoise(KeTerrainConfig& config) {
 
-  config.noise_data.clear();
-  config.noise_data.resize(static_cast<std::size_t>(config.size.x * config.size.y));
-
   const auto simplex {FastNoise::New<FastNoise::Simplex>()};
   const auto fractal {FastNoise::New<FastNoise::FractalFBm>()};
 
@@ -23,8 +20,6 @@ void ktp::noise::simplexFastNoise(KeTerrainConfig& config) {
 }
 
 void ktp::noise::perlinGLM(KeTerrainConfig& config) {
-
-  config.noise_data.resize(static_cast<std::size_t>(config.size.x * config.size.y));
 
   for (auto row = 0; row < config.size.y; ++row) {
     for (auto col = 0; col < config.size.x; ++col) {
