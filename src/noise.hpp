@@ -13,7 +13,6 @@
 #define KETERRAIN_SRC_NOISE_HPP_
 
 #include "types.hpp"
-#include <chrono>
 
 namespace ktp { namespace noise {
 
