@@ -1,7 +1,6 @@
 #include "gui.hpp"
 
 #include "../keterrain.hpp"
-#include "../noise.hpp"
 #include <imgui.h>
 #include <SFML/System.hpp>
 #include <thread>
@@ -27,17 +26,14 @@ void ktp::gui::layout(KeTerrain& keterrain) {
   ImGui::Text("Settings");
   ImGui::BeginDisabled(processing);
     // seed
-    static int seed {42};
-    ImGui::InputInt("Seed", &seed);
+    ImGui::InputInt("Seed", &ktr_config.seed);
     // size
-    static glm::vec<2, int> size {1000, 1000};
-    if (ImGui::InputInt("Width", &size.x, 1, 50)) {}
-    if (ImGui::InputInt("Height", &size.y, 1, 50)) {}
+    if (ImGui::InputInt("Width", &ktr_config.size.x, 1, 50)) {}
+    if (ImGui::InputInt("Height", &ktr_config.size.y, 1, 50)) {}
     // frequency
-    static float frequency {0.02f};
     constexpr auto frequency_format {"%.5f"};
-    if (ImGui::InputFloat("Frequency", &frequency, 0.0001f, 0.001f, frequency_format)) {
-      if (!first_use) keterrain.updateTexture(noise::perlinFastNoise(size, frequency, seed));
+    if (ImGui::InputFloat("Frequency", &ktr_config.frequency, 0.0001f, 0.001f, frequency_format)) {
+      if (!first_use) keterrain.updateTexture();
     }
     ImGui::Separator();
     constexpr auto colorized_text {"View colorized"};
@@ -48,12 +44,11 @@ void ktp::gui::layout(KeTerrain& keterrain) {
       processing = true;
       std::thread process_thread { [&] {
         chronometer.restart();
-        keterrain.resetTexture(size, noise::perlinFastNoise(size, frequency, seed));
+        keterrain.updateTexture();
         const auto elapsed_time {chronometer.getElapsedTime().asMilliseconds()};
         printf("elapsed time: %.4fs.\n", (double)elapsed_time / 1000.0);
         processing = false;
         first_use = false;
-        button_text = colorized_text;
       }};
       process_thread.detach();
     }

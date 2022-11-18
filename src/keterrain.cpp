@@ -5,6 +5,8 @@
 #include "gui/gui.hpp"
 #include <imgui-SFML.h>
 
+ktp::KeTerrainConfig ktp::ktr_config {};
+
 ktp::KeTerrain::KeTerrain():
   m_desktop(sf::VideoMode::getDesktopMode()),
   m_window(sf::VideoMode(m_window_size.x, m_window_size.y, m_desktop.bitsPerPixel), "keTerrain") {
@@ -15,7 +17,6 @@ ktp::KeTerrain::KeTerrain():
 }
 
 ktp::KeTerrain::~KeTerrain() { ImGui::SFML::Shutdown(); }
-
 
 ktp::RawTextureData ktp::KeTerrain::noiseToColorData(const NoiseData& noise) {
   RawTextureData texture_data {};
@@ -78,14 +79,30 @@ void ktp::KeTerrain::run() {
   }
 }
 
-void ktp::KeTerrain::resetTexture(const Size2Du& size, const NoiseData& new_data) {
-  // new noise texture
-  m_noise_texture = std::make_unique<sf::Texture>();
-  m_noise_texture->create(size.x, size.y);
-  // new colorized texture
-  m_colored_texture = std::make_unique<sf::Texture>();
-  m_colored_texture->create(size.x, size.y);
-  updateTexture(new_data);
-  // point the sprite to the new noise texture
-  m_sprite.setTexture(*m_noise_texture, true);
+void ktp::KeTerrain::updateTexture() {
+  static Size2D previous_size {};
+  // process the noise
+  noise::simplexFastNoise(ktr_config);
+  // see if we have to resize the texture and sprite
+  if (previous_size == ktr_config.size) {
+    m_noise_texture->update(noiseToTextureData(ktr_config.noise_data).data());
+    m_colored_texture->update(noiseToColorData(ktr_config.noise_data).data());
+  } else {
+    // new noise texture
+    m_noise_texture = std::make_unique<sf::Texture>();
+    m_noise_texture->create(ktr_config.size.x, ktr_config.size.y);
+    m_noise_texture->update(noiseToTextureData(ktr_config.noise_data).data());
+    // new colorized texture
+    m_colored_texture = std::make_unique<sf::Texture>();
+    m_colored_texture->create(ktr_config.size.x, ktr_config.size.y);
+    m_colored_texture->update(noiseToColorData(ktr_config.noise_data).data());
+    // point the sprite to the new texture
+    if (m_noise_sprite) {
+      m_sprite.setTexture(*m_noise_texture, true);
+    } else {
+      m_sprite.setTexture(*m_colored_texture, true);
+    }
+  }
+  // save the previous (current) size
+  previous_size = ktr_config.size;
 }

@@ -17,20 +17,16 @@
 namespace ktp { namespace noise {
 
 /**
- * @brief Generates Perlin noise data between [-1, 1].
- * @param size The size desired.
- * @param frequency The frequency.
- * @return A vector with the noise data.
+ * @brief Generates Simplex noise data between [-1, 1].
+ * @param config The config!
  */
-NoiseData perlinFastNoise(const Size2D& size, float frequency = 0.02f, int seed = 42);
+void simplexFastNoise(KeTerrainConfig& config);
 
 /**
  * @brief Generates Perlin noise data between [-1, 1].
- * @param size The size desired.
- * @param frequency The frequency.
- * @return A vector with the noise data.
+ * @param config The config!
  */
-NoiseData perlinGLM(const Size2D& size, float frequency = 10.f);
+void perlinGLM(KeTerrainConfig& config);
 
 } } // namespace noise/ktp
 

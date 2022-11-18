@@ -18,6 +18,8 @@
 
 namespace ktp {
 
+extern KeTerrainConfig ktr_config;
+
 class KeTerrain {
  public:
 
@@ -34,10 +36,7 @@ class KeTerrain {
     m_noise_sprite = !m_noise_sprite;
     return m_noise_sprite;
   }
-  void updateTexture(const NoiseData& new_data) {
-    m_noise_texture->update(noiseToTextureData(new_data).data());
-    m_colored_texture->update(noiseToColorData(new_data).data());
-  }
+  void updateTexture();
   auto windowSize() const { return m_window_size; }
 
  private:

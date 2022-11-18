@@ -9,6 +9,9 @@
  *
  */
 
+#if !defined(KETERRAIN_SRC_TYPES_HPP_)
+#define KETERRAIN_SRC_TYPES_HPP_
+
 #include <glm/vec2.hpp>
 #include <memory>
 #include <vector>
@@ -34,4 +37,15 @@ namespace ktp {
   using TexturePtr     = std::unique_ptr<sf::Texture>;
   using Size2D         = glm::vec<2, int>;
   using Size2Du        = glm::vec<2, unsigned int>;
+
+  struct KeTerrainConfig {
+    float     frequency {0.02f};
+    NoiseData noise_data {};
+    int       octaves {8};
+    int       seed {42};
+    Size2D    size {1000, 1000};
+    Size2D    starting_point {0, 0};
+  };
 }
+
+#endif // KETERRAIN_SRC_TYPES_HPP_
