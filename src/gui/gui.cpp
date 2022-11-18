@@ -35,7 +35,7 @@ void ktp::gui::layout(KeTerrain& keterrain) {
       keterrain.updateTexture();
     }
     // octaves
-    if (ImGui::SliderInt("Octaves", &ktr_config.octaves, 1, 20)) {
+    if (ImGui::InputInt("Octaves", &ktr_config.octaves, 1, 1)) {
       keterrain.updateTexture();
     }
     ImGui::Separator();
@@ -53,6 +53,10 @@ void ktp::gui::layout(KeTerrain& keterrain) {
         processing = false;
       }};
       process_thread.detach();
+    }
+    ImGui::SameLine();
+    if (ImGui::Button("Randomize")) {
+      keterrain.randomizeConfig();
     }
     ImGui::SameLine();
     if (ImGui::Button(button_text.c_str())) {

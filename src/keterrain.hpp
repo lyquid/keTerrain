@@ -29,8 +29,8 @@ class KeTerrain {
   static RawTextureData noiseToColorData(const NoiseData& noise);
   static RawTextureData noiseToTextureData(const NoiseData& noise);
 
+  void randomizeConfig();
   void run();
-  void resetTexture(const Size2Du& size, const NoiseData& new_data);
   bool switchTexture() {
     m_noise_sprite ? m_sprite.setTexture(*m_colored_texture) : m_sprite.setTexture(*m_noise_texture);
     m_noise_sprite = !m_noise_sprite;

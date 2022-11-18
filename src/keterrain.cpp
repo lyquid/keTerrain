@@ -12,14 +12,9 @@ ktp::KeTerrain::KeTerrain():
   m_desktop(sf::VideoMode::getDesktopMode()),
   m_window(sf::VideoMode(m_window_size.x, m_window_size.y, m_desktop.bitsPerPixel), "keTerrain") {
 
-  if (!ImGui::SFML::Init(m_window)) {
-    printf("ERROR initializing imgui-sfml");
-  }
+  if (!ImGui::SFML::Init(m_window)) printf("ERROR initializing imgui-sfml");
 
-  ktr_config.frequency = rng::randomFloat(0.0005f, 0.02f);
-  ktr_config.seed = rng::randomInt(1, 400);
-  // ktr_config.octaves = rng::randomInt(1, 8);
-  updateTexture();
+  randomizeConfig();
 }
 
 ktp::KeTerrain::~KeTerrain() { ImGui::SFML::Shutdown(); }
@@ -63,6 +58,13 @@ ktp::RawTextureData ktp::KeTerrain::noiseToTextureData(const NoiseData& noise) {
     flattenNoise(texture_data, value);
   }
   return texture_data;
+}
+
+void ktp::KeTerrain::randomizeConfig() {
+  ktr_config.frequency = rng::randomFloat(0.0005f, 0.02f);
+  ktr_config.seed = rng::randomInt(1, 1000);
+  // ktr_config.octaves = rng::randomInt(1, 8);
+  updateTexture();
 }
 
 void ktp::KeTerrain::run() {
