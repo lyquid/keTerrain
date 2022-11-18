@@ -21,6 +21,7 @@ namespace sf {
   class Clock;
   class Color;
   class Event;
+  class Image;
   class RenderWindow;
   class Sprite;
   class Texture;
@@ -40,11 +41,14 @@ namespace ktp {
 
   struct KeTerrainConfig {
     float     frequency {0.02f};
+    float     gain {0.5f};
+    float     lacunarity {2.0f};
     NoiseData noise_data {};
     int       octaves {8};
     int       seed {42};
     Size2D    size {1000, 1000};
     Size2D    starting_point {0, 0};
+    bool      tileable {false};
   };
 }
 

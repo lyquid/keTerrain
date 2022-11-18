@@ -31,6 +31,7 @@ class KeTerrain {
 
   void randomizeConfig();
   void run();
+  void saveImage() const;
   bool switchTexture() {
     m_noise_sprite ? m_sprite.setTexture(*m_colored_texture) : m_sprite.setTexture(*m_noise_texture);
     m_noise_sprite = !m_noise_sprite;
