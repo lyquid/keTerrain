@@ -3,7 +3,10 @@
 #include "../keterrain.hpp"
 #include "../noise.hpp"
 #include <imgui.h>
+#include <SFML/System.hpp>
 #include <thread>
+
+sf::Clock ktp::gui::chronometer {};
 
 void ktp::gui::layout(KeTerrain& keterrain) {
   // ImGui::ShowDemoWindow();
@@ -44,7 +47,10 @@ void ktp::gui::layout(KeTerrain& keterrain) {
     if (ImGui::Button("Generate texture")) {
       processing = true;
       std::thread process_thread { [&] {
+        chronometer.restart();
         keterrain.resetTexture(size, noise::perlinFastNoise(size, frequency, seed));
+        const auto elapsed_time {chronometer.getElapsedTime().asMilliseconds()};
+        printf("elapsed time: %.4fs.\n", (double)elapsed_time / 1000.0);
         processing = false;
         first_use = false;
         button_text = colorized_text;

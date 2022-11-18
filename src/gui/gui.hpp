@@ -18,6 +18,8 @@ namespace ktp { namespace gui {
 
 void layout(KeTerrain& keterrain);
 
+extern sf::Clock chronometer;
+
 } } // namespace gui/ktp
 
 

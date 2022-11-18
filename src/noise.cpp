@@ -2,15 +2,12 @@
 
 #include <FastNoise/FastNoise.h>
 #include <glm/gtc/noise.hpp>
-#include <SFML/Graphics.hpp>
 
 ktp::NoiseData ktp::noise::perlinFastNoise(const Size2D& size, float frequency, int seed) {
 
   const auto simplex {FastNoise::New<FastNoise::OpenSimplex2>()};
   const auto fractal {FastNoise::New<FastNoise::FractalFBm>()};
-
   NoiseData noise_data(static_cast<std::size_t>(size.x * size.y));
-
   fractal->SetSource(simplex);
   fractal->SetOctaveCount(8);
   fractal->GenUniformGrid2D(noise_data.data(), 0.f, 0.f, size.x, size.y, frequency, seed);
