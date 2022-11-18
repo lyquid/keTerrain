@@ -11,6 +11,7 @@ void ktp::noise::simplexFastNoise(KeTerrainConfig& config) {
   fractal->SetSource(simplex);
   fractal->SetOctaveCount(config.octaves);
   fractal->SetGain(config.gain);
+  fractal->SetLacunarity(config.lacunarity);
   fractal->GenUniformGrid2D(
     config.noise_data.data(),
     config.starting_point.x, config.starting_point.y,

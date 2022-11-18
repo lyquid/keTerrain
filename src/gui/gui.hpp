@@ -27,6 +27,7 @@ void changeView();
 void frequency();
 void gain();
 void generateTexture();
+void lacunarity();
 void randomize();
 void saveImage();
 void seed();

@@ -22,11 +22,10 @@ void ktp::gui::layout() {
     // size
     size();
     ImGui::Separator();
-    // frequency
+    // operations
     frequency();
-    // gain
     gain();
-    // octaves
+    lacunarity();
     octaves();
     ImGui::Separator();
     // generation button
@@ -84,6 +83,12 @@ void ktp::gui::generateTexture() {
       generating_texture = false;
     }};
     process_thread.detach();
+  }
+}
+
+void ktp::gui::lacunarity() {
+  if (ImGui::InputFloat("Lacunarity", &ktr_config.lacunarity, 0.001f, 0.01f)) {
+    keterrain->updateTexture();
   }
 }
 
