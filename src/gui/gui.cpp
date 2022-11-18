@@ -23,6 +23,9 @@ void ktp::gui::layout(KeTerrain& keterrain) {
 
   ImGui::Text("Settings");
   ImGui::BeginDisabled(processing);
+    // seed
+    static int seed {42};
+    ImGui::InputInt("Seed", &seed);
     // size
     static glm::vec<2, int> size {1600, 1200};
     if (ImGui::InputInt("Width", &size.x, 1, 50)) {}
@@ -31,7 +34,7 @@ void ktp::gui::layout(KeTerrain& keterrain) {
     static float frequency {0.02f};
     constexpr auto frequency_format {"%.5f"};
     if (ImGui::InputFloat("Frequency", &frequency, 0.001f, 0.01f, frequency_format)) {
-      if (!first_use) keterrain.updateTexture(noise::perlinFastNoise(size, frequency));
+      if (!first_use) keterrain.updateTexture(noise::perlinFastNoise(size, frequency, seed));
     }
     ImGui::Separator();
     constexpr auto colorized_text {"View colorized"};
@@ -41,7 +44,7 @@ void ktp::gui::layout(KeTerrain& keterrain) {
     if (ImGui::Button("Generate texture")) {
       processing = true;
       std::thread process_thread { [&] {
-        keterrain.resetTexture(size, noise::perlinFastNoise(size, frequency));
+        keterrain.resetTexture(size, noise::perlinFastNoise(size, frequency, seed));
         processing = false;
         first_use = false;
         button_text = colorized_text;
