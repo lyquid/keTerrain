@@ -39,16 +39,21 @@ endif()
 if(DEFINED CMAKE_TOOLCHAIN_FILE)
 	message(STATUS "Using vcpkg toolchain file")
   # For Windows: Prevent overriding the parent project's compiler/linker settings
-  # set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-  # Find the packages needed
-	# like: find_package(SFML COMPONENTS system window graphics CONFIG REQUIRED)
+  set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+  find_package(glm CONFIG REQUIRED)
+  find_package(imgui CONFIG REQUIRED)
+  find_package(ImGui-SFML REQUIRED)
+  # find_package(nlohmann_json CONFIG REQUIRED)
+  find_package(SFML COMPONENTS system window graphics CONFIG REQUIRED)
 else()
 	message(STATUS "Using CMake find modules")
   # Find the packages needed
 	# like: find_package(SFML COMPONENTS system window graphics CONFIG REQUIRED)
 endif()
 
+add_subdirectory(lib/FastNoise2)
 add_subdirectory(src)
+add_subdirectory(src/gui)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

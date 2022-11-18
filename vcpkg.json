@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "description": "Procedural terrain generators.",
   "dependencies":[
+    "glm",
     "imgui",
     "imgui-sfml",
     "sfml"

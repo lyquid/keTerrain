@@ -1,6 +1,9 @@
-#include <iostream>
+#include "keterrain.hpp"
 
 int main(int argc, char* argv[]) {
-  std::cout << "I've been created by scapp!";
+
+  ktp::KeTerrain keTerrain {};
+  keTerrain.run();
+
   return 0;
 }
