@@ -10,7 +10,6 @@ sf::Clock ktp::gui::chronometer {};
 void ktp::gui::layout(KeTerrain& keterrain) {
   // ImGui::ShowDemoWindow();
 
-  static bool first_use {true};
   static bool processing {false};
 
   ImGui::SetNextWindowSize(ImVec2(510, 528), ImGuiCond_FirstUseEver);
@@ -33,11 +32,11 @@ void ktp::gui::layout(KeTerrain& keterrain) {
     // frequency
     constexpr auto frequency_format {"%.5f"};
     if (ImGui::InputFloat("Frequency", &ktr_config.frequency, 0.0001f, 0.001f, frequency_format)) {
-      if (!first_use) keterrain.updateTexture();
+      keterrain.updateTexture();
     }
     // octaves
     if (ImGui::SliderInt("Octaves", &ktr_config.octaves, 1, 20)) {
-      if (!first_use) keterrain.updateTexture();
+      keterrain.updateTexture();
     }
     ImGui::Separator();
     constexpr auto colorized_text {"View colorized"};
@@ -52,12 +51,11 @@ void ktp::gui::layout(KeTerrain& keterrain) {
         const auto elapsed_time {chronometer.getElapsedTime().asMilliseconds()};
         printf("elapsed time: %.4fs.\n", (double)elapsed_time / 1000.0);
         processing = false;
-        first_use = false;
       }};
       process_thread.detach();
     }
     ImGui::SameLine();
-    if (ImGui::Button(button_text.c_str()) && !first_use) {
+    if (ImGui::Button(button_text.c_str())) {
       if (keterrain.switchTexture()) {
         button_text = colorized_text;
       } else {

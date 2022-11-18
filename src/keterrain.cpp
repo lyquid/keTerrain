@@ -2,6 +2,7 @@
 
 #include "noise.hpp"
 #include "palette.hpp"
+#include "random.hpp"
 #include "gui/gui.hpp"
 #include <imgui-SFML.h>
 
@@ -14,6 +15,11 @@ ktp::KeTerrain::KeTerrain():
   if (!ImGui::SFML::Init(m_window)) {
     printf("ERROR initializing imgui-sfml");
   }
+
+  ktr_config.frequency = rng::randomFloat(0.0005f, 0.02f);
+  ktr_config.seed = rng::randomInt(1, 400);
+  // ktr_config.octaves = rng::randomInt(1, 8);
+  updateTexture();
 }
 
 ktp::KeTerrain::~KeTerrain() { ImGui::SFML::Shutdown(); }

@@ -65,7 +65,7 @@ class KeTerrain {
   sf::RenderWindow m_window;
 
   sf::Sprite m_sprite {};
-  bool m_noise_sprite {true};
+  bool m_noise_sprite {false};
   TexturePtr m_colored_texture {nullptr};
   TexturePtr m_noise_texture {nullptr};
 };

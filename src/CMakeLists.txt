@@ -2,6 +2,7 @@ add_executable(keTerrain
   keterrain.cpp
   main.cpp
   noise.cpp
+  random.cpp
 )
 target_compile_features(keTerrain PUBLIC cxx_std_20)
 set_target_properties(keTerrain PROPERTIES CXX_EXTENSIONS OFF)
