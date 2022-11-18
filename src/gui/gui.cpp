@@ -35,6 +35,10 @@ void ktp::gui::layout(KeTerrain& keterrain) {
     if (ImGui::InputFloat("Frequency", &ktr_config.frequency, 0.0001f, 0.001f, frequency_format)) {
       if (!first_use) keterrain.updateTexture();
     }
+    // octaves
+    if (ImGui::SliderInt("Octaves", &ktr_config.octaves, 1, 20)) {
+      if (!first_use) keterrain.updateTexture();
+    }
     ImGui::Separator();
     constexpr auto colorized_text {"View colorized"};
     constexpr auto noise_text {"View noise"};

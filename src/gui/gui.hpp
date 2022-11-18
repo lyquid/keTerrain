@@ -22,5 +22,4 @@ extern sf::Clock chronometer;
 
 } } // namespace gui/ktp
 
-
 #endif // KETERRAIN_SRC_GUI_GUI_HPP_
