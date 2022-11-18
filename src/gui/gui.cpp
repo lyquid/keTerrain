@@ -27,13 +27,13 @@ void ktp::gui::layout(KeTerrain& keterrain) {
     static int seed {42};
     ImGui::InputInt("Seed", &seed);
     // size
-    static glm::vec<2, int> size {1600, 1200};
+    static glm::vec<2, int> size {1000, 1000};
     if (ImGui::InputInt("Width", &size.x, 1, 50)) {}
     if (ImGui::InputInt("Height", &size.y, 1, 50)) {}
     // frequency
     static float frequency {0.02f};
     constexpr auto frequency_format {"%.5f"};
-    if (ImGui::InputFloat("Frequency", &frequency, 0.001f, 0.01f, frequency_format)) {
+    if (ImGui::InputFloat("Frequency", &frequency, 0.0001f, 0.001f, frequency_format)) {
       if (!first_use) keterrain.updateTexture(noise::perlinFastNoise(size, frequency, seed));
     }
     ImGui::Separator();

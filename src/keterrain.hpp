@@ -59,7 +59,7 @@ class KeTerrain {
     });
   }
 
-  Size2Du m_window_size {1600, 1200};
+  Size2Du m_window_size {1920, 1080};
 
   sf::Clock m_delta_clock {};
   sf::VideoMode m_desktop;
