@@ -5,6 +5,7 @@
 #include "random.hpp"
 #include "gui/gui.hpp"
 #include <imgui-SFML.h>
+#include <sstream>
 
 ktp::KeTerrainConfig ktp::ktr_config {};
 
@@ -86,6 +87,23 @@ void ktp::KeTerrain::run() {
 
     m_window.display();
   }
+}
+
+void ktp::KeTerrain::saveImage() const {
+  sf::Image image {};
+  if (m_noise_sprite) {
+    image = m_noise_texture->copyToImage();
+  } else{
+    image = m_colored_texture->copyToImage();
+  }
+  std::stringstream filename {};
+  filename << "simplex_"
+           << ktr_config.size.x << 'x' << ktr_config.size.y
+           << "_seed" << ktr_config.seed
+           << "_" << "freq" << ktr_config.frequency
+           << '_' << ktr_config.octaves << "octaves"
+           << ".png";
+  image.saveToFile(filename.str());
 }
 
 void ktp::KeTerrain::updateTexture() {

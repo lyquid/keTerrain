@@ -8,6 +8,7 @@
 sf::Clock ktp::gui::chronometer {};
 ktp::KeTerrain* ktp::gui::keterrain {nullptr};
 bool ktp::gui::generating_texture {false};
+bool ktp::gui::saving_image {false};
 
 void ktp::gui::layout() {
   // ImGui::ShowDemoWindow();
@@ -35,9 +36,15 @@ void ktp::gui::layout() {
     ImGui::SameLine();
     // change view button
     changeView();
+    ImGui::Separator();
+    saveImage();
   ImGui::EndDisabled();
 
   ImGui::Separator();
+  if (saving_image) {
+    ImGui::Text("Saving image...");
+    return;
+  }
   if (generating_texture) {
     ImGui::Text("Generating texture...");
   }
@@ -66,7 +73,7 @@ void ktp::gui::generateTexture() {
       chronometer.restart();
       keterrain->updateTexture();
       const auto elapsed_time {chronometer.getElapsedTime().asMilliseconds()};
-      printf("elapsed time: %.4fs.\n", (double)elapsed_time * 0.001);
+      printf("Texture generated in %.4fs.\n", (double)elapsed_time * 0.001);
       generating_texture = false;
     }};
     process_thread.detach();
@@ -76,6 +83,22 @@ void ktp::gui::generateTexture() {
 void ktp::gui::randomize() {
   if (ImGui::Button("Randomize")) {
     keterrain->randomizeConfig();
+  }
+}
+
+void ktp::gui::saveImage() {
+  if (ImGui::Button("Save image")) {
+    saving_image = true;
+    generating_texture = true;
+    std::thread process_thread { [&] {
+      chronometer.restart();
+      keterrain->saveImage();
+      const auto elapsed_time {chronometer.getElapsedTime().asMilliseconds()};
+      printf("Image saved in %.4fs.\n", (double)elapsed_time * 0.001);
+      saving_image = false;
+      generating_texture = false;
+    }};
+    process_thread.detach();
   }
 }
 

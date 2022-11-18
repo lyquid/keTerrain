@@ -21,6 +21,7 @@ namespace sf {
   class Clock;
   class Color;
   class Event;
+  class Image;
   class RenderWindow;
   class Sprite;
   class Texture;

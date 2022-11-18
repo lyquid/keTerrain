@@ -19,6 +19,7 @@ namespace ktp { namespace gui {
 extern sf::Clock chronometer;
 extern KeTerrain* keterrain;
 extern bool generating_texture;
+extern bool saving_image;
 
 void layout();
 
@@ -26,6 +27,7 @@ void changeView();
 void frequency();
 void generateTexture();
 void randomize();
+void saveImage();
 void seed();
 void size();
 void octaves();
