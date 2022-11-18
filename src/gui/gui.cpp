@@ -24,7 +24,8 @@ void ktp::gui::layout() {
     ImGui::Separator();
     // frequency
     frequency();
-    ImGui::Separator();
+    // gain
+    gain();
     // octaves
     octaves();
     ImGui::Separator();
@@ -62,6 +63,12 @@ void ktp::gui::changeView() {
 void ktp::gui::frequency() {
   constexpr auto frequency_format {"%.5f"};
   if (ImGui::InputFloat("Frequency", &ktr_config.frequency, 0.0001f, 0.001f, frequency_format)) {
+    keterrain->updateTexture();
+  }
+}
+
+void ktp::gui::gain() {
+  if (ImGui::InputFloat("Gain", &ktr_config.gain, 0.001f, 0.01f)) {
     keterrain->updateTexture();
   }
 }

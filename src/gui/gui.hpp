@@ -25,6 +25,7 @@ void layout();
 
 void changeView();
 void frequency();
+void gain();
 void generateTexture();
 void randomize();
 void saveImage();

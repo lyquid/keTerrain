@@ -41,6 +41,7 @@ namespace ktp {
 
   struct KeTerrainConfig {
     float     frequency {0.02f};
+    float     gain {-0.5f};
     NoiseData noise_data {};
     int       octaves {8};
     int       seed {42};
