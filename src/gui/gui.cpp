@@ -9,19 +9,22 @@ sf::Clock ktp::gui::chronometer {};
 ktp::KeTerrain* ktp::gui::keterrain {nullptr};
 bool ktp::gui::generating_texture {false};
 bool ktp::gui::saving_image {false};
+bool ktp::gui::size_changed {false};
 
 void ktp::gui::layout() {
   // ImGui::ShowDemoWindow();
   ImGui::SetNextWindowSize(ImVec2(510, 528), ImGuiCond_FirstUseEver);
 
-  ImGui::Text("Settings");
+  ImGui::Text("Texture settings");
   ImGui::BeginDisabled(generating_texture);
-    seed();
-    tileable();
-    ImGui::Separator();
     size();
-    ImGui::Separator();
-    // operations
+    saveImage();
+  ImGui::EndDisabled();
+  ImGui::Separator();
+  ImGui::Text("Generation settings");
+  ImGui::BeginDisabled(generating_texture);
+    tileable();
+    seed();
     frequency();
     gain();
     lacunarity();
@@ -35,10 +38,7 @@ void ktp::gui::layout() {
     ImGui::SameLine();
     // change view button
     changeView();
-    ImGui::Separator();
-    saveImage();
   ImGui::EndDisabled();
-
   ImGui::Separator();
   if (saving_image) {
     ImGui::Text("Saving image...");
@@ -80,6 +80,7 @@ void ktp::gui::generateTexture() {
       const auto elapsed_time {chronometer.getElapsedTime().asMilliseconds()};
       printf("Texture generated in %.4fs.\n", (double)elapsed_time * 0.001);
       generating_texture = false;
+      size_changed = false;
     }};
     process_thread.detach();
   }
@@ -111,6 +112,10 @@ void ktp::gui::saveImage() {
     }};
     process_thread.detach();
   }
+  if (size_changed) {
+    ImGui::SameLine();
+    ImGui::Text("Generate a new texture to apply size changes!");
+  }
 }
 
 void ktp::gui::seed() {
@@ -118,7 +123,9 @@ void ktp::gui::seed() {
 }
 
 void ktp::gui::size() {
-  ImGui::InputInt2("Size (x,y)", &ktr_config.size.x);
+  if (ImGui::InputInt2("Size (x,y)", &ktr_config.size.x)) {
+    size_changed = true;
+  }
 }
 
 void ktp::gui::tileable() {

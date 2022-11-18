@@ -20,6 +20,7 @@ extern sf::Clock chronometer;
 extern KeTerrain* keterrain;
 extern bool generating_texture;
 extern bool saving_image;
+extern bool size_changed;
 
 void layout();
 
