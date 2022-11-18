@@ -16,10 +16,9 @@ void ktp::gui::layout() {
 
   ImGui::Text("Settings");
   ImGui::BeginDisabled(generating_texture);
-    // seed
     seed();
+    tileable();
     ImGui::Separator();
-    // size
     size();
     ImGui::Separator();
     // operations
@@ -120,6 +119,12 @@ void ktp::gui::seed() {
 
 void ktp::gui::size() {
   ImGui::InputInt2("Size (x,y)", &ktr_config.size.x);
+}
+
+void ktp::gui::tileable() {
+  if (ImGui::Checkbox("Tileable", &ktr_config.tileable)) {
+    keterrain->updateTexture();
+  }
 }
 
 void ktp::gui::octaves() {

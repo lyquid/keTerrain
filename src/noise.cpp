@@ -12,13 +12,22 @@ void ktp::noise::simplexFastNoise(KeTerrainConfig& config) {
   fractal->SetOctaveCount(config.octaves);
   fractal->SetGain(config.gain);
   fractal->SetLacunarity(config.lacunarity);
-  fractal->GenUniformGrid2D(
-    config.noise_data.data(),
-    config.starting_point.x, config.starting_point.y,
-    config.size.x, config.size.y,
-    config.frequency,
-    config.seed
-  );
+  if (config.tileable) {
+    fractal->GenTileable2D(
+      config.noise_data.data(),
+      config.size.x, config.size.y,
+      config.frequency,
+      config.seed
+    );
+  } else {
+    fractal->GenUniformGrid2D(
+      config.noise_data.data(),
+      config.starting_point.x, config.starting_point.y,
+      config.size.x, config.size.y,
+      config.frequency,
+      config.seed
+    );
+  }
 }
 
 void ktp::noise::perlinGLM(KeTerrainConfig& config) {

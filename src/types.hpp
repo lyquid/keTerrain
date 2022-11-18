@@ -48,6 +48,7 @@ namespace ktp {
     int       seed {42};
     Size2D    size {1000, 1000};
     Size2D    starting_point {0, 0};
+    bool      tileable {false};
   };
 }
 

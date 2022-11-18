@@ -32,6 +32,7 @@ void randomize();
 void saveImage();
 void seed();
 void size();
+void tileable();
 void octaves();
 
 } } // namespace gui/ktp
