@@ -40,7 +40,7 @@ namespace ktp {
   using Size2Du        = glm::vec<2, unsigned int>;
 
   struct KeTerrainConfig {
-    float     frequency {0.02f};
+    float     frequency {0.005f};
     float     gain {0.5f};
     float     lacunarity {2.0f};
     NoiseData noise_data {};

@@ -27,6 +27,7 @@ extern bool seed_locked;
 void layout();
 
 void changeView();
+void defaults();
 void frequency();
 void gain();
 void generateTexture();

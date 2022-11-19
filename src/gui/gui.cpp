@@ -24,9 +24,13 @@ void ktp::gui::layout() {
   ImGui::Text("Texture settings");
   ImGui::BeginDisabled(generating_texture);
     size();
+    changeView();
+    ImGui::SameLine();
     invertElevation();
     ImGui::SameLine();
     saveImage();
+    ImGui::SameLine();
+    defaults();
   ImGui::EndDisabled();
   ImGui::Separator();
   ImGui::Text("Generation settings");
@@ -44,8 +48,6 @@ void ktp::gui::layout() {
     // randomize button
     randomize();
     ImGui::SameLine();
-    // change view button
-    changeView();
   ImGui::EndDisabled();
   ImGui::Separator();
   if (saving_image) {
@@ -64,6 +66,15 @@ void ktp::gui::changeView() {
   static std::string button_text {noise_text};
   if (ImGui::Button(button_text.c_str())) {
     keterrain->switchTexture() ? button_text = colorized_text : button_text = noise_text;
+  }
+}
+
+void ktp::gui::defaults() {
+  if (ImGui::Button("Default")) {
+    ktr_config = KeTerrainConfig{};
+    ktr_config.noise_data.resize(static_cast<std::size_t>(ktr_config.size.x * ktr_config.size.y));
+    keterrain->generateNoise();
+    keterrain->updateTexture();
   }
 }
 

@@ -17,7 +17,8 @@ ktp::KeTerrain::KeTerrain():
   if (!ImGui::SFML::Init(m_window)) printf("ERROR initializing imgui-sfml");
   gui::keterrain = this;
 
-  randomizeConfig();
+  generateNoise();
+  updateTexture();
 }
 
 ktp::KeTerrain::~KeTerrain() { ImGui::SFML::Shutdown(); }
