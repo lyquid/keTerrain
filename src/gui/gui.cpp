@@ -12,9 +12,13 @@ bool ktp::gui::saving_image {false};
 bool ktp::gui::size_changed {false};
 
 void ktp::gui::layout() {
-  // ImGui::ShowDemoWindow();
-  ImGui::SetNextWindowSize(ImVec2(510, 528), ImGuiCond_FirstUseEver);
+  ImGui::ShowDemoWindow();
 
+  ImGui::SetNextWindowSize(ImVec2(510, 528), ImGuiCond_FirstUseEver);
+  if (!ImGui::Begin("KeTerrain configuration")) {
+    ImGui::End();
+    return;
+  }
   ImGui::Text("Texture settings");
   ImGui::BeginDisabled(generating_texture);
     size();
@@ -47,6 +51,7 @@ void ktp::gui::layout() {
   if (generating_texture) {
     ImGui::Text("Generating texture...");
   }
+  ImGui::End();
 }
 
 void ktp::gui::changeView() {
