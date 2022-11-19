@@ -14,7 +14,7 @@ bool ktp::gui::frequency_locked {false};
 bool ktp::gui::seed_locked {false};
 
 void ktp::gui::layout() {
-  ImGui::ShowDemoWindow();
+  // ImGui::ShowDemoWindow();
 
   ImGui::SetNextWindowSize(ImVec2(510, 528), ImGuiCond_FirstUseEver);
   if (!ImGui::Begin("KeTerrain configuration")) {

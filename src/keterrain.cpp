@@ -5,6 +5,7 @@
 #include "random.hpp"
 #include "gui/gui.hpp"
 #include <imgui-SFML.h>
+#include <limits>
 #include <sstream>
 
 ktp::KeTerrainConfig ktp::ktr_config {};
@@ -64,7 +65,7 @@ ktp::RawTextureData ktp::KeTerrain::noiseToTextureData(const NoiseData& noise) {
 
 void ktp::KeTerrain::randomizeConfig(bool frequency, bool seed) {
   if (frequency) ktr_config.frequency = rng::randomFloat(0.0005f, 0.02f);
-  if (seed) ktr_config.seed = rng::randomInt(1, 1000);
+  if (seed) ktr_config.seed = rng::randomInt(std::numeric_limits<int>::min(), std::numeric_limits<int>::max());
   // ktr_config.octaves = rng::randomInt(1, 8); // why this produces bad numbers???!!!
   updateTexture();
 }
