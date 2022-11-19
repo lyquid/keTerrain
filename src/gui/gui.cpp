@@ -32,6 +32,9 @@ void ktp::gui::layout() {
     ImGui::SameLine();
     defaults();
   ImGui::EndDisabled();
+  if (size_changed) {
+    ImGui::Text("Generate a new texture to apply size changes!");
+  }
   ImGui::Separator();
   ImGui::Text("Generation settings");
   ImGui::BeginDisabled(generating_texture);
@@ -150,10 +153,6 @@ void ktp::gui::saveImage() {
       generating_texture = false;
     }};
     process_thread.detach();
-  }
-  if (size_changed) {
-    ImGui::SameLine();
-    ImGui::Text("Generate a new texture to apply size changes!");
   }
 }
 
