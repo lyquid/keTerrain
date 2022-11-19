@@ -29,7 +29,7 @@ class KeTerrain {
   static RawTextureData noiseToColorData(const NoiseData& noise);
   static RawTextureData noiseToTextureData(const NoiseData& noise);
 
-  void randomizeConfig();
+  void randomizeConfig(bool frequency = true, bool seed = true);
   void run();
   void saveImage() const;
   bool switchTexture() {
