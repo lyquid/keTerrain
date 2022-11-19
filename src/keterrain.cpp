@@ -63,10 +63,17 @@ ktp::RawTextureData ktp::KeTerrain::noiseToTextureData(const NoiseData& noise) {
   return texture_data;
 }
 
+void ktp::KeTerrain::generateNoise() const {
+  if (m_previous_size != ktr_config.size)
+    ktr_config.noise_data.resize(static_cast<std::size_t>(ktr_config.size.x * ktr_config.size.y));
+  noise::simplexFastNoise(ktr_config);
+}
+
 void ktp::KeTerrain::randomizeConfig(bool frequency, bool seed) {
   if (frequency) ktr_config.frequency = rng::randomFloat(0.0005f, 0.02f);
   if (seed) ktr_config.seed = rng::randomInt(std::numeric_limits<int>::min(), std::numeric_limits<int>::max());
   // ktr_config.octaves = rng::randomInt(1, 8); // why this produces bad numbers???!!!
+  generateNoise();
   updateTexture();
 }
 
@@ -108,19 +115,12 @@ void ktp::KeTerrain::saveImage() const {
 }
 
 void ktp::KeTerrain::updateTexture() {
-  static Size2D previous_size {};
   // see if we have to resize the textures and sprite
-  if (previous_size == ktr_config.size) {
-    // process the noise
-    noise::simplexFastNoise(ktr_config);
+  if (m_previous_size == ktr_config.size) {
     // update textures
     m_noise_texture->update(noiseToTextureData(ktr_config.noise_data).data());
     m_colored_texture->update(noiseToColorData(ktr_config.noise_data).data());
   } else {
-    // resize the noise data's vector
-    ktr_config.noise_data.resize(static_cast<std::size_t>(ktr_config.size.x * ktr_config.size.y));
-    // process the noise
-    noise::simplexFastNoise(ktr_config);
     // new noise texture
     m_noise_texture = std::make_unique<sf::Texture>();
     m_noise_texture->create(ktr_config.size.x, ktr_config.size.y);
@@ -137,5 +137,5 @@ void ktp::KeTerrain::updateTexture() {
     }
   }
   // save the previous (current) size
-  previous_size = ktr_config.size;
+  m_previous_size = ktr_config.size;
 }

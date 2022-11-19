@@ -24,6 +24,8 @@ void ktp::gui::layout() {
   ImGui::Text("Texture settings");
   ImGui::BeginDisabled(generating_texture);
     size();
+    invertElevation();
+    ImGui::SameLine();
     saveImage();
   ImGui::EndDisabled();
   ImGui::Separator();
@@ -69,7 +71,9 @@ void ktp::gui::frequency() {
   constexpr auto frequency_format {"%.5f"};
   ImGui::BeginDisabled(frequency_locked);
     if (ImGui::InputFloat("Frequency", &ktr_config.frequency, 0.0001f, 0.001f, frequency_format)) {
+      keterrain->generateNoise();
       keterrain->updateTexture();
+      size_changed = false;
     }
   ImGui::EndDisabled();
   ImGui::SameLine();
@@ -78,7 +82,9 @@ void ktp::gui::frequency() {
 
 void ktp::gui::gain() {
   if (ImGui::InputFloat("Gain", &ktr_config.gain, 0.001f, 0.01f)) {
+    keterrain->generateNoise();
     keterrain->updateTexture();
+    size_changed = false;
   }
 }
 
@@ -87,6 +93,7 @@ void ktp::gui::generateTexture() {
     generating_texture = true;
     std::thread process_thread { [&] {
       chronometer.restart();
+      keterrain->generateNoise();
       keterrain->updateTexture();
       const auto elapsed_time {chronometer.getElapsedTime().asMilliseconds()};
       printf("Texture generated in %.4fs.\n", (double)elapsed_time * 0.001);
@@ -97,9 +104,19 @@ void ktp::gui::generateTexture() {
   }
 }
 
+void ktp::gui::invertElevation() {
+  if (ImGui::Button("Invert elevation")) {
+    keterrain->invertElevation();
+    keterrain->updateTexture();
+    size_changed = false;
+  }
+}
+
 void ktp::gui::lacunarity() {
   if (ImGui::InputFloat("Lacunarity", &ktr_config.lacunarity, 0.001f, 0.01f)) {
+    keterrain->generateNoise();
     keterrain->updateTexture();
+    size_changed = false;
   }
 }
 
@@ -132,7 +149,9 @@ void ktp::gui::saveImage() {
 void ktp::gui::seed() {
   ImGui::BeginDisabled(seed_locked);
     if(ImGui::InputInt("Seed", &ktr_config.seed)) {
+      keterrain->generateNoise();
       keterrain->updateTexture();
+      size_changed = false;
     }
   ImGui::EndDisabled();
   ImGui::SameLine();
@@ -147,12 +166,16 @@ void ktp::gui::size() {
 
 void ktp::gui::tileable() {
   if (ImGui::Checkbox("Tileable", &ktr_config.tileable)) {
+    keterrain->generateNoise();
     keterrain->updateTexture();
+    size_changed = false;
   }
 }
 
 void ktp::gui::octaves() {
   if (ImGui::InputInt("Octaves", &ktr_config.octaves, 1, 1)) {
+    keterrain->generateNoise();
     keterrain->updateTexture();
+    size_changed = false;
   }
 }
