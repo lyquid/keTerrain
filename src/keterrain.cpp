@@ -62,9 +62,9 @@ ktp::RawTextureData ktp::KeTerrain::noiseToTextureData(const NoiseData& noise) {
   return texture_data;
 }
 
-void ktp::KeTerrain::randomizeConfig() {
-  ktr_config.frequency = rng::randomFloat(0.0005f, 0.02f);
-  ktr_config.seed = rng::randomInt(1, 1000);
+void ktp::KeTerrain::randomizeConfig(bool frequency, bool seed) {
+  if (frequency) ktr_config.frequency = rng::randomFloat(0.0005f, 0.02f);
+  if (seed) ktr_config.seed = rng::randomInt(1, 1000);
   // ktr_config.octaves = rng::randomInt(1, 8); // why this produces bad numbers???!!!
   updateTexture();
 }

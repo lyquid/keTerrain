@@ -21,6 +21,8 @@ extern KeTerrain* keterrain;
 extern bool generating_texture;
 extern bool saving_image;
 extern bool size_changed;
+extern bool frequency_locked;
+extern bool seed_locked;
 
 void layout();
 

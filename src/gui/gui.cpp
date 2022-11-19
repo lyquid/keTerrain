@@ -10,6 +10,8 @@ ktp::KeTerrain* ktp::gui::keterrain {nullptr};
 bool ktp::gui::generating_texture {false};
 bool ktp::gui::saving_image {false};
 bool ktp::gui::size_changed {false};
+bool ktp::gui::frequency_locked {false};
+bool ktp::gui::seed_locked {false};
 
 void ktp::gui::layout() {
   ImGui::ShowDemoWindow();
@@ -65,9 +67,13 @@ void ktp::gui::changeView() {
 
 void ktp::gui::frequency() {
   constexpr auto frequency_format {"%.5f"};
-  if (ImGui::InputFloat("Frequency", &ktr_config.frequency, 0.0001f, 0.001f, frequency_format)) {
-    keterrain->updateTexture();
-  }
+  ImGui::BeginDisabled(frequency_locked);
+    if (ImGui::InputFloat("Frequency", &ktr_config.frequency, 0.0001f, 0.001f, frequency_format)) {
+      keterrain->updateTexture();
+    }
+  ImGui::EndDisabled();
+  ImGui::SameLine();
+  ImGui::Checkbox("Locked##frequency", &frequency_locked);
 }
 
 void ktp::gui::gain() {
@@ -99,7 +105,7 @@ void ktp::gui::lacunarity() {
 
 void ktp::gui::randomize() {
   if (ImGui::Button("Randomize")) {
-    keterrain->randomizeConfig();
+    keterrain->randomizeConfig(!frequency_locked, !seed_locked);
   }
 }
 
@@ -124,7 +130,13 @@ void ktp::gui::saveImage() {
 }
 
 void ktp::gui::seed() {
-  ImGui::InputInt("Seed", &ktr_config.seed);
+  ImGui::BeginDisabled(seed_locked);
+    if(ImGui::InputInt("Seed", &ktr_config.seed)) {
+      keterrain->updateTexture();
+    }
+  ImGui::EndDisabled();
+  ImGui::SameLine();
+  ImGui::Checkbox("Locked##seed", &seed_locked);
 }
 
 void ktp::gui::size() {
