@@ -15,6 +15,7 @@
 #include "types.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
+#include <algorithm>
 
 namespace ktp {
 
@@ -29,6 +30,11 @@ class KeTerrain {
   static RawTextureData noiseToColorData(const NoiseData& noise);
   static RawTextureData noiseToTextureData(const NoiseData& noise);
 
+  void generateNoise() const;
+  void invertElevation() {
+    std::transform(ktr_config.noise_data.cbegin(), ktr_config.noise_data.cend(), ktr_config.noise_data.begin(),
+      [](float data) { return -data; });
+  }
   void randomizeConfig(bool frequency = true, bool seed = true);
   void run();
   void saveImage() const;
@@ -69,6 +75,8 @@ class KeTerrain {
   bool m_noise_sprite {false};
   TexturePtr m_colored_texture {nullptr};
   TexturePtr m_noise_texture {nullptr};
+
+  Size2D m_previous_size {};
 };
 
 } // namespace ktp
